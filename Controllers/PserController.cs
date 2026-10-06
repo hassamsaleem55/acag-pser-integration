@@ -47,15 +47,15 @@ public sealed class PserController : ControllerBase
             return BadRequest(CreateErrorResponse(StatusCodes.Status400BadRequest, "INVALID_REQUEST", "Invalid request data."));
         }
 
-        //var loginResult = await _pserClient.LoginAsync(username, password, cancellationToken);
+        var loginResult = await _pserClient.LoginAsync(username, password, cancellationToken);
 
-        //if (!loginResult.Success || loginResult.Data is null)
-        //{
-        //    return CreateApiResponse(loginResult);
-        //}
+        if (!loginResult.Success || loginResult.Data is null)
+        {
+            return CreateApiResponse(loginResult);
+        }
 
-        //var eligibilityResult = await _pserClient.CheckEligibilityAsync(request.ApplicantCNIC, loginResult.Data.AccessToken, cancellationToken);
-        var eligibilityResult = await _pserClient.CheckEligibilityAsync(request.ApplicantCNIC, "", cancellationToken);
+        var eligibilityResult = await _pserClient.CheckEligibilityAsync(request.ApplicantCNIC, loginResult.Data.AccessToken, cancellationToken);
+        //var eligibilityResult = await _pserClient.CheckEligibilityAsync(request.ApplicantCNIC, "", cancellationToken);
 
         return CreateApiResponse(eligibilityResult);
     }

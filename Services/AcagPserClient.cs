@@ -40,26 +40,21 @@ public sealed class AcagPserClient : IAcagPserClient
 
         var payload = new { cnic };
 
-        var apiResponse = new PserApiResponse<PserEligibilityData>
-        {
-            Success = true,
-            StatusCode = 200,
-            Message = "CNIC is eligible",
-            Data = new PserEligibilityData
-            {
-                Cnic = cnic,
-                PserEligibility = "Up to 50",
-                ReasonCode = "VALID"
-            },
-            Error = null
-        };
+        //var apiResponse = new PserApiResponse<PserEligibilityData>
+        //{
+        //    Success = true,
+        //    StatusCode = 200,
+        //    Message = "CNIC is eligible",
+        //    Data = new PserEligibilityData
+        //    {
+        //        Cnic = cnic,
+        //        PserEligibility = "Up to 50",
+        //        ReasonCode = "VALID"
+        //    },
+        //    Error = null
+        //};
 
-        //var apiResponse =
-        //    await _acagHttpClient.PostAsync<PserEligibilityData>(
-        //        "/api/pser/eligibility",
-        //        payload,
-        //        token,
-        //        cancellationToken);
+        var apiResponse = await _acagHttpClient.PostAsync<PserEligibilityData>("/api/pser/eligibility", payload, token, cancellationToken);
 
         // ---------------------------------------------------------
         // 2. Pass third-party response values to stored procedure
